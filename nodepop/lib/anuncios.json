@@ -1,0 +1,81 @@
+{
+  "anuncios": [
+    {
+      "nombre" : "Móvil OPPO A78",
+      "venta" : true,
+      "precio" : 199,
+      "foto" : "oppo_a78.jpg",
+      "tags" : [ "mobile", "work" ]
+    },
+    {
+      "nombre" : "Móvil Iphone 13",
+      "venta" : false,
+      "precio" : 949,
+      "foto" : "iphone_13.jpg",
+      "tags" : [ "mobile", "work" ]
+    },
+    {
+      "nombre" : "Bambas Munich Mini Track",
+      "venta" : true,
+      "precio" : 30,
+      "foto" : "munich_mini_track.jpg",
+      "tags" : [ "lifestyle" ]
+    },
+    {
+      "nombre" : "Portátil Acer Nitro",
+      "venta" : true,
+      "precio" : 949,
+      "foto" : "acer_nitro.jpg",
+      "tags" : [ "work" ]
+    },
+    {
+      "nombre" : "Logitech Marathon Mouse",
+      "venta" : false,
+      "precio" : 42.99,
+      "foto" : "marathon_mouse.jpg",
+      "tags" : [ "work" ]
+    },
+    {
+      "nombre" : "Fiat 500",
+      "venta" : true,
+      "precio" : 14800,
+      "foto" : "fiat_500.jpg",
+      "tags" : [ "motor" ]
+    },
+    {
+      "nombre" : "Pantalones tejanos talla: 44",
+      "venta" : false,
+      "precio" : 15,
+      "foto" : "tejanos.jpg",
+      "tags" : [ "lifestyle" ]
+    },
+    {
+      "nombre" : "Honda Civic",
+      "venta" : false,
+      "precio" : 12350,
+      "foto" : "honda_civic.jpg",
+      "tags" : [ "motor" ]
+    },
+    {
+      "nombre" : "Móvil Samsung A14",
+      "venta" : true,
+      "precio" : 450,
+      "foto" : "samsung_a14.jpg",
+      "tags" : [ "mobile" ]
+    },
+    {
+      "nombre" : "Camiseta blanca talla XL",
+      "venta" : false,
+      "precio" : 5.50,
+      "foto" : "camiseta_blanca.jpg",
+      "tags" : [ "lifestyle" ]
+    },
+    {
+      "nombre" : "Teclado mecánico EASYTAO",
+      "venta" : true,
+      "precio" : 220,
+      "foto" : "teclado.jpg",
+      "tags" : [ "lifestyle" ]
+    }     
+  ]
+}
