@@ -4,7 +4,7 @@
     <title><%= title %></title>
     <link rel="stylesheet" href="/stylesheets/pico.css">
     <link rel='stylesheet' href='/stylesheets/style.css' />
-    <link rel="shortcut icon" href="/images/nodepopIcon.png" type="image/x-icon">
+    <link rel="shortcut icon" href="/assets/img/nodepopIcon.png" type="image/x-icon">
   </head>
   <body>
     <div class="cabecera">
@@ -83,12 +83,12 @@
             <p id="tags_producto">Categoria: <% anuncio.tags.forEach(tag => {%>
             <span> "<%= tag %>"</span>  <%}) %></p>
             <p id="precio_producto">Precio: <%= anuncio.precio %>€</p>
-            <img src="/images/<%=anuncio.foto %>" alt=<%= anuncio.nombre %>>
+            <img src="/assets/img/ads/<%=anuncio.foto %>" alt=<%= anuncio.nombre %>>
           </div>
           <%}) %>
         <%} %> 
       </main>
     </div>
-    <script src="./javascripts/indexFront.js"></script>
+    <script src="/js/indexFront.js"></script>
   </body>
 </html>
