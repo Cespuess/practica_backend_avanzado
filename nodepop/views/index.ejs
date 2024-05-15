@@ -1,71 +1,4 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title><%= title %></title>
-    <link rel="stylesheet" href="/stylesheets/pico.css">
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-    <link rel="shortcut icon" href="/assets/img/nodepopIcon.png" type="image/x-icon">
-  </head>
-  <body>
-    <div class="cabecera">
-      <h1><%= title %></h1>
-      <p>Bienvenidos a la aplicación número 1 de compra/venta de <span id="keepcoding">KeepCoding.</span></p>
-    </div>
-
-    <div class="creacionAnuncio">
-
-      <h2>Crear anuncio</h2>
-      <form action="/" method="post" class="form">
-        <div class="form__crearAnuncio">
-  
-          <div class="form__campo">
-            <label for="nombre" class="form__label">Nombre producto:</label>
-            <input type="text" class="form__input" id="nombre" name="nombre" required>
-          </div>
-  
-          <div class="form__campo">
-            <label for="venta" class="form__label">Vendes o compras:</label>
-            <select name="venta" id="venta" class="form" required>
-              <option value="true">vendes</option>
-              <option value="false">compras</option>
-            </select>
-          </div>
-  
-          <div class="form__campo">
-            <label for="precio" class="form__label">Precio:</label>
-            <input type="number" class="form__input" id="precio" name="precio" required>
-          </div>
-  
-          <fieldset class="form__campo">
-            <Legend>Categoría del producto:</Legend>
-            <div id="checkbox_validador"></div>
-            <div class="form__campo__tags">
-              <input type="checkbox" id="work" name="tags" value="work" >
-              <label for="work">Work</label>
-            </div>
-            <div class="form__campo__tags">
-              <input type="checkbox" id="mobile" name="tags" value="mobile" >
-              <label for="mobile">Mobile</label>
-            </div>
-            <div class="form__campo__tags">
-              <input type="checkbox" id="motor" name="tags" value="motor" >
-              <label for="motor">Motor</label>
-            </div>
-            <div class="form__campo__tags">
-              <input type="checkbox" id="lifestyle" name="tags" value="lifestyle" >
-              <label for="lifestyle">Lifestyle</label>
-            </div>
-          </fieldset>
-          <div class="form__campo">
-            <label for="foto" class="form__label">Foto:</label>
-            <input type="text" id="foto" name="foto" placeholder="foto_anuncio.jpg" required>
-          </div>
-          <div class="form__campo form__campo__boton">
-            <input type="submit" class="boton" value="Crear anuncio">
-          </div>
-        </div>
-      </form>
-    </div>
+<%- include('header.ejs') %>
 
     <div class="catalogo">
       <h2>Catálogo</h2>
@@ -89,6 +22,6 @@
         <%} %> 
       </main>
     </div>
-    <script src="/js/indexFront.js"></script>
-  </body>
-</html>
+    
+  
+<%- include('footer.ejs') %>
