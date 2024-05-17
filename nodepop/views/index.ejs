@@ -1,27 +1,30 @@
 <%- include('header.ejs') %>
 
-    <div class="catalogo">
-      <h2>Catálogo</h2>
-      <main class="grid">
-        <% if (error) {%>
-          <div class="error">
-            <p><%= error %></p>
-          </div>
-        <% } else { %>
+<section class="page-section bg-light" id="ads">
+  <div class="container">
+      <div class="text-center">
+          <h2 class="section-heading text-uppercase">Anuncios</h2>
+      </div>
+      <div class="row">
           <% anuncios.forEach(anuncio => {%>
-          <div class="producto">
-            <h5 id="nombre_producto"><%= anuncio.nombre %></h5>
-            <% if (anuncio.venta) { %> <p>Se vende</p> <% } 
-            else { %> <p>Se compra</p> <%}  %> 
-            <p id="tags_producto">Categoria: <% anuncio.tags.forEach(tag => {%>
-            <span> "<%= tag %>"</span>  <%}) %></p>
-            <p id="precio_producto">Precio: <%= anuncio.precio %>€</p>
-            <img src="/assets/img/ads/<%=anuncio.foto %>" alt=<%= anuncio.nombre %>>
-          </div>
+            <div class="col-lg-4 col-sm-6 mb-4">
+                <div class="portfolio-item">
+                    <div class="img-container">
+                      <img class="img-fluid" src="/assets/img/ads/<%=anuncio.foto %>" alt=<%= anuncio.nombre %> />
+                    </div>
+                    <div class="portfolio-caption">
+                        <div class="portfolio-caption-heading"><%= anuncio.nombre %></div>
+                        <div class="portfolio-caption-subheading text-muted"><% if (anuncio.venta) { %> Se vende <% } 
+                          else { %> Se compra <%}  %></div>
+                        <div class="portfolio-caption-subheading text-muted">Categoria: <% anuncio.tags.forEach(tag => {%> <span> "<%= tag %>"</span>  <%}) %></div>
+                        <div class="portfolio-caption-subheading text-muted">Precio: <%= anuncio.precio %>€</div>
+                    </div>
+                </div>
+            </div>         
           <%}) %>
-        <%} %> 
-      </main>
-    </div>
-    
-  
+      </div>
+      
+  </div>
+</section>
+
 <%- include('footer.ejs') %>
