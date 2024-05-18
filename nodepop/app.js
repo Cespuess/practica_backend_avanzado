@@ -3,12 +3,14 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const session = require('express-session');
 require('./lib/connectMongoose');
-const { Ads } = require('./controllers');
+const { AdsController, LoginController } = require('./controllers');
 const { validationsAdsSearchParams } = require('./lib/validationsFunctions');
 
 var app = express();
-const adsController = new Ads();
+const adsController = new AdsController();
+const loginController = new LoginController();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -20,11 +22,23 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(
+  session({
+    name: 'nodepop-session',
+    secret: process.env.SECRET_SESSION,
+    saveUnitialized: true,
+    resave: false,
+    cookie: {
+      maxAge: 1000 * 60 * 60 * 24 * 7
+    }
+  })
+);
 // Rutas del API
 app.use('/api/anuncios', require('./routes/api/anuncios'));
 
 // Rutas del website
 app.get('/', validationsAdsSearchParams(), adsController.index);
+app.get('/login', loginController.index);
 app.use('/users', require('./routes/users'));
 
 // catch 404 and forward to error handler

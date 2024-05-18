@@ -1,3 +1,4 @@
 module.exports = {
-  Ads: require('./AdsController')
+  AdsController: require('./AdsController'),
+  LoginController: require('./LoginController')
 };

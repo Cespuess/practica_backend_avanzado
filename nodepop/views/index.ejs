@@ -6,6 +6,11 @@
           <h2 class="section-heading text-uppercase">Anuncios</h2>
       </div>
       <div class="row">
+        <% if (error) {%>
+          <div class="alert alert-danger text-center" role="alert">
+            <p><%= error %></p>
+          </div>
+          <% } else { %>
           <% anuncios.forEach(anuncio => {%>
             <div class="col-lg-4 col-sm-6 mb-4">
                 <div class="portfolio-item">
@@ -21,9 +26,8 @@
                     </div>
                 </div>
             </div>         
-          <%}) %>
+          <%}) %> <%} %>
       </div>
-      
   </div>
 </section>
 
