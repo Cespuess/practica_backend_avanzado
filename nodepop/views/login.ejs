@@ -4,22 +4,22 @@
 <section class="page-section" id="contact">
   <div class="container">
       <div class="text-center">
-          <h2 class="section-heading text-uppercase">Iniciar Sesión</h2>
+          <h2 class="section-heading text-uppercase"><%= __('Iniciar Sesión') %></h2>
       </div>
       <form id="contactForm" method="post">
           <div class="row align-items-stretch mb-5 justify-content-center">
               <div class="col-md-6">
                   <div class="form-group">
-                      <input class="form-control" id="email" name="email" type="email" placeholder="Tu Email *" value="<%=email %>" data-sb-validations="required,email" />
-                      <div class="invalid-feedback" data-sb-feedback="email:required">Email obligatorio.</div>
-                      <div class="invalid-feedback" data-sb-feedback="email:email">Email no válido.</div>
+                      <input class="form-control" id="email" name="email" type="email" placeholder="<%= __('Tu Email') %> *" value="<%=email %>" data-sb-validations="required,email" />
+                      <div class="invalid-feedback" data-sb-feedback="email:required"><%= __('Email obligatorio.') %></div>
+                      <div class="invalid-feedback" data-sb-feedback="email:email"><%= __('Email no válido.') %></div>
                   </div>
                   <div class="form-group">
-                    <input class="form-control" id="password" name="password" type="password" placeholder="Tu Contraseña *" data-sb-validations="required" />
-                    <div class="invalid-feedback" data-sb-feedback="password:required">Contraseña obligatoria.</div>
+                    <input class="form-control" id="password" name="password" type="password" placeholder="<%= __('Tu contraseña') %> *" data-sb-validations="required" />
+                    <div class="invalid-feedback" data-sb-feedback="password:required"><%= __('Contraseña obligatoria.') %></div>
                 </div>
           </div>
-          <div class="text-center"><button class="btn btn-primary btn-xl text-uppercase" id="submitButton" type="submit">Acceder</button></div>
+          <div class="text-center"><button class="btn btn-primary btn-xl text-uppercase" id="submitButton" type="submit"><%= __('Acceder') %></button></div>
       </form>
       <% if (error) {%>
         <div class="alert alert-danger text-center mt-4" role="alert">

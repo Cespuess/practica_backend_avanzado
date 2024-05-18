@@ -3,7 +3,7 @@
 <section class="page-section bg-light" id="ads">
   <div class="container">
       <div class="text-center">
-          <h2 class="section-heading text-uppercase">Anuncios</h2>
+          <h2 class="section-heading text-uppercase"><%= __('Anuncios') %></h2>
       </div>
       <div class="row">
         <% if (error) {%>
@@ -19,10 +19,10 @@
                     </div>
                     <div class="portfolio-caption">
                         <div class="portfolio-caption-heading"><%= anuncio.nombre %></div>
-                        <div class="portfolio-caption-subheading text-muted"><% if (anuncio.venta) { %> Se vende <% } 
-                          else { %> Se compra <%}  %></div>
-                        <div class="portfolio-caption-subheading text-muted">Categoria: <% anuncio.tags.forEach(tag => {%> <span> "<%= tag %>"</span>  <%}) %></div>
-                        <div class="portfolio-caption-subheading text-muted">Precio: <%= anuncio.precio %>€</div>
+                        <div class="portfolio-caption-subheading text-muted"><% if (anuncio.venta) { %> <%= __('Se vende') %> <% } 
+                          else { %> <%= __('Se compra') %> <%}  %></div>
+                        <div class="portfolio-caption-subheading text-muted"><%= __('Categoria:') %>' <% anuncio.tags.forEach(tag => {%> <span> "<%= tag %>"</span>  <%}) %></div>
+                        <div class="portfolio-caption-subheading text-muted"><%= __('Precio:') %> <%= anuncio.precio %>€</div>
                     </div>
                 </div>
             </div>         

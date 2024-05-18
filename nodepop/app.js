@@ -6,13 +6,19 @@ var logger = require('morgan');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
 require('./lib/connectMongoose');
-const { AdsController, LoginController } = require('./controllers');
+const {
+  AdsController,
+  LoginController,
+  LanguageController
+} = require('./controllers');
 const validations = require('./lib/validationsFunctions');
 const sessionAuth = require('./lib/sessionAuthMiddleware');
+const I18n = require('./lib/i18nConfigure');
 
 var app = express();
 const adsController = new AdsController();
 const loginController = new LoginController();
+const languageController = new LanguageController();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -43,6 +49,8 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use(I18n.init);
+
 // Rutas del API
 app.use('/api/anuncios', require('./routes/api/anuncios'));
 
@@ -51,6 +59,7 @@ app.get('/', sessionAuth, validations.AdsSearchParams, adsController.index);
 app.get('/login', loginController.index);
 app.post('/login', loginController.post);
 app.get('/logout', loginController.logout);
+app.get('/change-language/:language', languageController.changeLocale);
 
 app.use('/users', require('./routes/users'));
 
