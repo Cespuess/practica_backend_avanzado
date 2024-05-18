@@ -4,6 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const session = require('express-session');
+const MongoStore = require('connect-mongo');
 require('./lib/connectMongoose');
 const { AdsController, LoginController } = require('./controllers');
 const { validationsAdsSearchParams } = require('./lib/validationsFunctions');
@@ -31,10 +32,12 @@ app.use(
     resave: false,
     cookie: {
       maxAge: 1000 * 60 * 60 * 24 * 7
-    }
+    },
+    store: MongoStore.create({ mongoUrl: process.env.URL_MONGODB })
   })
 );
-// para tener la session disponible en .ejs
+
+// para tener session disponible en .ejs
 app.use((req, res, next) => {
   res.locals.session = req.session;
   next();
