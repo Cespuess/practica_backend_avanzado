@@ -7,6 +7,7 @@ const session = require('express-session');
 require('./lib/connectMongoose');
 const { AdsController, LoginController } = require('./controllers');
 const { validationsAdsSearchParams } = require('./lib/validationsFunctions');
+const sessionAuth = require('./lib/sessionAuthMiddleware');
 
 var app = express();
 const adsController = new AdsController();
@@ -37,7 +38,7 @@ app.use(
 app.use('/api/anuncios', require('./routes/api/anuncios'));
 
 // Rutas del website
-app.get('/', validationsAdsSearchParams(), adsController.index);
+app.get('/', sessionAuth, validationsAdsSearchParams(), adsController.index);
 app.get('/login', loginController.index);
 app.post('/login', loginController.post);
 app.use('/users', require('./routes/users'));
