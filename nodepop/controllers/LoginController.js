@@ -1,3 +1,5 @@
+const { Usuario } = require('../models');
+
 class LoginController {
   index(req, res, next) {
     res.locals.email = '';
@@ -5,10 +7,24 @@ class LoginController {
     res.render('login', { title: 'Nodepop' });
   }
 
-  post(req, res, next) {
+  async post(req, res, next) {
     try {
       const { email, password } = req.body;
-    } catch (error) {}
+      const usuario = await Usuario.findOne({ email: email });
+
+      // si no lo encuentra o la contraseña no coincide
+      if (!usuario || !(await usuario.comparePassword(password))) {
+        res.locals.email = email;
+        res.locals.error = 'Usuario / Contraseña no válidos';
+        return res.render('login', { title: 'Nodepop' });
+      }
+
+      req.session.userId = usuario._id;
+
+      res.redirect('/');
+    } catch (error) {
+      next(error);
+    }
   }
 }
 
