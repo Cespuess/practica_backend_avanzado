@@ -39,6 +39,7 @@ app.use('/api/anuncios', require('./routes/api/anuncios'));
 // Rutas del website
 app.get('/', validationsAdsSearchParams(), adsController.index);
 app.get('/login', loginController.index);
+app.post('/login', loginController.post);
 app.use('/users', require('./routes/users'));
 
 // catch 404 and forward to error handler

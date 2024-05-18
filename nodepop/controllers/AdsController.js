@@ -1,5 +1,5 @@
 const { validationResult } = require('express-validator');
-const Anuncio = require('../models/Anuncio');
+const { Anuncio } = require('../models');
 const { listado } = require('../lib/utils');
 
 class AdsController {
