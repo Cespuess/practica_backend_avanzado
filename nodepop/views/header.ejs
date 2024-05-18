@@ -27,6 +27,10 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
+                    <% getLocales().forEach(locale => { %>
+                        <li class="nav-item"><a class="nav-link" href="/change-language/<%= locale %>"><img src="/assets/img/flags/<%= locale %>.png" width="25" height="22" loading="lazy"></a></li>
+                    <%}) %>
+                    
                     <li class="nav-item"><a class="nav-link" href="#team"><%= __('Nuevo Anuncio') %></a></li>
                     <% if (session.userId) {%>
                       <li class="nav-item"><a class="nav-link" href="/logout"><%= __('Logout') %></a></li>
