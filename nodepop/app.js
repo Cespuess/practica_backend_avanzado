@@ -34,6 +34,12 @@ app.use(
     }
   })
 );
+// para tener la session disponible en .ejs
+app.use((req, res, next) => {
+  res.locals.session = req.session;
+  next();
+});
+
 // Rutas del API
 app.use('/api/anuncios', require('./routes/api/anuncios'));
 
@@ -41,6 +47,8 @@ app.use('/api/anuncios', require('./routes/api/anuncios'));
 app.get('/', sessionAuth, validationsAdsSearchParams(), adsController.index);
 app.get('/login', loginController.index);
 app.post('/login', loginController.post);
+app.get('/logout', loginController.logout);
+
 app.use('/users', require('./routes/users'));
 
 // catch 404 and forward to error handler

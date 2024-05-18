@@ -26,6 +26,15 @@ class LoginController {
       next(error);
     }
   }
+
+  logout(req, res, next) {
+    req.session.regenerate((error) => {
+      if (error) {
+        return next(error);
+      }
+      res.redirect('/login');
+    });
+  }
 }
 
 module.exports = LoginController;
