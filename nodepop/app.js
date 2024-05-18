@@ -7,7 +7,7 @@ const session = require('express-session');
 const MongoStore = require('connect-mongo');
 require('./lib/connectMongoose');
 const { AdsController, LoginController } = require('./controllers');
-const { validationsAdsSearchParams } = require('./lib/validationsFunctions');
+const validations = require('./lib/validationsFunctions');
 const sessionAuth = require('./lib/sessionAuthMiddleware');
 
 var app = express();
@@ -47,7 +47,7 @@ app.use((req, res, next) => {
 app.use('/api/anuncios', require('./routes/api/anuncios'));
 
 // Rutas del website
-app.get('/', sessionAuth, validationsAdsSearchParams(), adsController.index);
+app.get('/', sessionAuth, validations.AdsSearchParams, adsController.index);
 app.get('/login', loginController.index);
 app.post('/login', loginController.post);
 app.get('/logout', loginController.logout);

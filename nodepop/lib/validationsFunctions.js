@@ -1,7 +1,7 @@
 const { valBody, valQuery } = require('./validaciones');
 
-function validationsAdsSearchParams() {
-  return [
+const validations = {
+  AdsSearchParams: [
     valQuery.precio,
     valQuery.venta,
     valQuery.tags,
@@ -9,7 +9,14 @@ function validationsAdsSearchParams() {
     valQuery.precioMax,
     valQuery.nombre,
     valQuery.noFieldsWeb
-  ];
-}
+  ],
+  CreateAd: [
+    valBody.tags,
+    valBody.nombre,
+    valBody.venta,
+    valBody.precio,
+    valBody.foto
+  ]
+};
 
-module.exports = { validationsAdsSearchParams };
+module.exports = validations;
