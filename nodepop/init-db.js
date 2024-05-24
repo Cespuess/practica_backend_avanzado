@@ -38,7 +38,6 @@ async function inicializaAnuncios() {
   const eliminados = await Anuncio.deleteMany();
   console.log(`Eliminados ${eliminados.deletedCount} anuncios`);
 
-  // importamos los anuncios iniciales y mostramos en consola la cantidad de documentos creados
   const [administrador, cliente] = await Promise.all([
     Usuario.findOne({ email: 'administrador@example.com' }),
     Usuario.findOne({ email: 'cliente@example.com' })

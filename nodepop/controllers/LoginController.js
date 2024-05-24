@@ -1,4 +1,5 @@
 const { Usuario } = require('../models');
+const jwt = require('jsonwebtoken');
 
 class LoginController {
   index(req, res, next) {
@@ -34,6 +35,24 @@ class LoginController {
       }
       res.redirect('/login');
     });
+  }
+
+  async postApiToken(req, res, next) {
+    try {
+      const { email, password } = req.body;
+      const user = await Usuario.findOne({ email });
+
+      if (!user || !(await user.comparePassword(password)))
+        return res.json({ error: 'invalid credentials' });
+
+      const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET_KEY, {
+        expiresIn: '1h'
+      });
+
+      return res.json({ token });
+    } catch (error) {
+      next(error);
+    }
   }
 }
 
