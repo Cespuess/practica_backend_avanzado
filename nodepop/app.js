@@ -13,7 +13,9 @@ const {
 } = require('./controllers');
 const validations = require('./lib/validationsFunctions');
 const sessionAuth = require('./lib/sessionAuthMiddleware');
+const jwtAuth = require('./lib/authJWT');
 const I18n = require('./lib/i18nConfigure');
+const authJWT = require('./lib/authJWT');
 
 var app = express();
 const adsController = new AdsController();
@@ -53,7 +55,7 @@ app.use(I18n.init);
 
 // Rutas del API
 app.post('/api/login', loginController.postApiToken);
-app.use('/api/anuncios', require('./routes/api/anuncios'));
+app.use('/api/anuncios', authJWT, require('./routes/api/anuncios'));
 
 // Rutas del website
 app.get('/', sessionAuth, validations.AdsSearchParams, adsController.index);
