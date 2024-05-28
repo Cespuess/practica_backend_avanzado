@@ -5,6 +5,7 @@ const Anuncio = require('../../models/Anuncio');
 const { listado } = require('../../lib/utils');
 const { validationResult } = require('express-validator');
 const { valBody, valQuery } = require('../../lib/validaciones');
+const createThumbnail = require('../../lib/requesterThumbnail');
 
 // GET users listing
 
@@ -64,6 +65,7 @@ router.post('/', upload.single('foto'), async (req, res, next) => {
 
     // lo guardamos en la BD
     const anuncioGuardado = await anuncio.save();
+    createThumbnail(data.foto);
 
     res.json({ anuncioCreado: anuncioGuardado });
   } catch (error) {
