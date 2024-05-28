@@ -7,7 +7,7 @@ const anuncioSchema = mongoose.Schema({
   precio: { type: Number, required: true, index: true },
   foto: { type: String, required: true },
   tags: { type: [String], required: true, index: true },
-  owner: { ref: 'Usuario', type: mongoose.Schema.ObjectId }
+  owner: { ref: 'Usuario', type: mongoose.Schema.ObjectId, required: true }
 });
 
 // método listar que utilizaremos para paginar la búsqueda
