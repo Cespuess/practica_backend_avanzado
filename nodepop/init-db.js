@@ -49,6 +49,7 @@ async function inicializaAnuncios() {
       venta: true,
       precio: 199,
       foto: 'oppo_a78.jpg',
+      thumbFoto: '',
       tags: ['mobile', 'work'],
       owner: administrador._id
     },
@@ -57,6 +58,7 @@ async function inicializaAnuncios() {
       venta: false,
       precio: 949,
       foto: 'iphone_13.jpg',
+      thumbFoto: '',
       tags: ['mobile', 'work'],
       owner: cliente._id
     },
@@ -65,6 +67,7 @@ async function inicializaAnuncios() {
       venta: true,
       precio: 30,
       foto: 'munich_mini_track.jpg',
+      thumbFoto: '',
       tags: ['lifestyle'],
       owner: administrador._id
     },
@@ -73,6 +76,7 @@ async function inicializaAnuncios() {
       venta: true,
       precio: 949,
       foto: 'acer_nitro.jpg',
+      thumbFoto: '',
       tags: ['work'],
       owner: cliente._id
     },
@@ -81,6 +85,7 @@ async function inicializaAnuncios() {
       venta: false,
       precio: 42.99,
       foto: 'marathon_mouse.jpg',
+      thumbFoto: '',
       tags: ['work'],
       owner: administrador._id
     },
@@ -89,6 +94,7 @@ async function inicializaAnuncios() {
       venta: true,
       precio: 14800,
       foto: 'fiat_500.jpg',
+      thumbFoto: '',
       tags: ['motor'],
       owner: cliente._id
     },
@@ -97,6 +103,7 @@ async function inicializaAnuncios() {
       venta: false,
       precio: 15,
       foto: 'tejanos.jpg',
+      thumbFoto: '',
       tags: ['lifestyle'],
       owner: administrador._id
     },
@@ -105,6 +112,7 @@ async function inicializaAnuncios() {
       venta: false,
       precio: 12350,
       foto: 'honda_civic.jpg',
+      thumbFoto: '',
       tags: ['motor'],
       owner: cliente._id
     },
@@ -113,6 +121,7 @@ async function inicializaAnuncios() {
       venta: true,
       precio: 450,
       foto: 'samsung_a14.jpg',
+      thumbFoto: '',
       tags: ['mobile'],
       owner: administrador._id
     },
@@ -121,6 +130,7 @@ async function inicializaAnuncios() {
       venta: false,
       precio: 5.5,
       foto: 'camiseta_blanca.jpg',
+      thumbFoto: '',
       tags: ['lifestyle'],
       owner: cliente._id
     },
@@ -129,6 +139,7 @@ async function inicializaAnuncios() {
       venta: true,
       precio: 220,
       foto: 'teclado.jpg',
+      thumbFoto: '',
       tags: ['lifestyle'],
       owner: administrador._id
     }

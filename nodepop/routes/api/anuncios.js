@@ -1,4 +1,6 @@
 var express = require('express');
+const path = require('path');
+const fs = require('fs');
 var router = express.Router();
 const upload = require('../../lib/uploadConfigure');
 const Anuncio = require('../../models/Anuncio');
@@ -102,6 +104,21 @@ router.delete('/:id', async (req, res, next) => {
   try {
     const id = req.params.id;
     const producto = await Anuncio.find({ _id: id });
+    // borrado de las imágenes
+    const sharedPath = path.join(
+      __dirname,
+      '..',
+      '..',
+      'public',
+      'assets',
+      'img',
+      'ads'
+    );
+    const pathDeleteFoto = path.join(sharedPath, producto[0].foto);
+    const pathDeleteThumbnail = path.join(sharedPath, producto[0].thumbFoto);
+    fs.unlinkSync(pathDeleteFoto);
+    fs.unlinkSync(pathDeleteThumbnail);
+
     await Anuncio.deleteOne({ _id: id });
     res.json({ productoEliminado: producto[0] });
   } catch (error) {
