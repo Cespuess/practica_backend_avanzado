@@ -9,8 +9,16 @@ function createThumbnail(filename, adId) {
     fileName: filename
   };
 
-  requester.send(event, async (result) => {
-    await Anuncio.findByIdAndUpdate(adId, { thumbFoto: result });
+  requester.send(event, async (error, result) => {
+    try {
+      if (error) {
+        console.log('Problema al crear el thumbnail');
+      } else {
+        await Anuncio.findByIdAndUpdate(adId, { thumbFoto: result });
+      }
+    } catch (err) {
+      console.log(err);
+    }
   });
 }
 

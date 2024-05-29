@@ -24,8 +24,9 @@ responder.on('create-Thumbnail', async (req, done) => {
     'ads',
     modifiedFileName
   );
+
   const image = await jimp.read(originalFilePath);
   await image.resize(100, 100);
   await image.writeAsync(modifiedFilePath);
-  done(modifiedFileName);
+  done(null, modifiedFileName);
 });
