@@ -3,12 +3,13 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "cross-env NODEPOP_ENV=production node ./bin/www",
-    "dev": "cross-env NODEPOP_ENV=development DEBUG=nodepop:* nodemon ./bin/www ",
+    "prod": "cross-env NODEPOP_ENV=production node ./bin/www",
     "init-db": "node init-db.js",
-    "micro1": "cross-env nodemon ./lib/requesterThumbnail.js",
-    "micro2": "cross-env nodemon ./microservices/responderThumbnail.js",
-    "start-micro": "npm-run-all --parallel dev micro2"
+    "dev-app": "cross-env NODEPOP_ENV=development DEBUG=nodepop:* nodemon ./bin/www ",
+    "micro-dev": "cross-env nodemon ./microservices/responderThumbnail.js",
+    "micro-prod": "cross-env node ./microservices/responderThumbnail.js",
+    "dev": "npm-run-all --parallel dev-app micro-dev",
+    "start": "npm-run-all --parallel prod micro-prod"
   },
   "dependencies": {
     "bcrypt": "^5.1.1",

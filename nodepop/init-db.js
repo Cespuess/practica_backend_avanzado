@@ -1,4 +1,5 @@
 'use strict';
+require('dotenv').config();
 
 const connection = require('./lib/connectMongoose');
 const { Anuncio, Usuario } = require('./models');

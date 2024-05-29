@@ -65,7 +65,7 @@ router.post('/', upload.single('foto'), async (req, res, next) => {
 
     // lo guardamos en la BD
     const anuncioGuardado = await anuncio.save();
-    createThumbnail(data.foto);
+    createThumbnail(data.foto, anuncioGuardado.id);
 
     res.json({ anuncioCreado: anuncioGuardado });
   } catch (error) {
