@@ -1,12 +1,11 @@
-# Proyecto módulo Desarrollo Backend con Node.js
+# Proyecto módulo Backend Avanzado con Node.js
 
 ## ¿ En que consiste ?
 
-Esta práctica consiste en la creación de una API para el servicio de comercio de artículos de segunda mano llamado Nodepop. La API permitirá gestionar anuncios de compra/venta, ofreciendo la capacidad de filtrar la búsqueda por diversos campos. También se podrán crear, modificar o eliminar los anuncios según sea necesario.
+Basándonos la [práctica del módulo de Fundamentos Backend](https://github.com/Cespuess/practica_fundamentos_backend_node.js), en la que creamos una página de compra/venta de artículos de segunda mano y su API,
+hemos mejorado el proyecto implementado autenticación con JWT para la API, y con Session en el website. Además, hemos convertido el website en una aplicación multi-idioma e incorporado un microservicio que genera un thumbnail de la imagen subida al crear un anuncio.
 
-Además de la API, la aplicación dispondrá de una página web que mostrará los anuncios con todos sus detalles, extraídos directamente de la base de datos.
-
-Os proporciono el fichero con la explicación de la [práctica](./Fundamentos%20Backend%20-%20Práctica%20Web16.pdf) para una comprensión más completa.
+Os proporciono el fichero con la explicación de la [práctica](./Backend_Avanzado_Práctica_Web16.pdf) para una comprensión más completa.
 
 ## Pasos a seguir para poder utilizar la aplicación
 
@@ -14,15 +13,23 @@ Os proporciono el fichero con la explicación de la [práctica](./Fundamentos%20
 
 Descargar MongoDB de su [página web](https://www.mongodb.com/try/download/community).
 
-Después de instalar MongoDB, inicia el servidor y mantenlo en ejecución.
+Después de instalar MongoDB, inicia el servidor y mantenerlo en ejecución.
 
 #### <u> Clonar el repositorio: </u>
 
 Copiar el siguiente comando en el directorio de vuestra elección:
 
 ```sh
-git clone git@github.com:Cespuess/practica_fundamentos_backend_node.js.git
+git clone git@github.com:Cespuess/practica_backend_avanzado.git
 ```
+
+#### <u> Crear fichero .env: </u>
+
+1. Replicar el fichero `.env.example` y renombrarlo `.env`
+2. Informar las siguientes claves:
+   - `JWT_SECRET_KEY`: introducir una clave secreta cualquiera para la creación del JWT. Existen páginas web para generarlas como [randomkeygen](https://randomkeygen.com/)
+   - `SECRET_SESSION` = Igual que el anterior, para firmar la cookie de session.
+   - `URL_MONGODB` = Aquí debes indicar la URL de tu base de datos de MongoDB, o puedes dejarlo como está.
 
 #### <u> Instalar dependencias: </u>
 
@@ -34,11 +41,19 @@ npm install
 
 #### <u> Inicializar la base de datos:</u>
 
-⚠️ **CUIDADO**, el siguiente comando borra **TODA** la base de datos!!!
+> [!WARNING]
+> El siguiente comando borra **TODA** la base de datos!!!
 
 ```sh
 npm run init-db
 ```
+
+Este comando nos creará anuncios y usuarios para poder empezar a utilizar la aplicación.
+
+Los usuarios creados son los siguiente:
+
+- **email**: user@example.com **password**: 1234
+- **email**: administrador@example.com **password**: 1234
 
 ## Desarrollo
 
@@ -50,22 +65,47 @@ npm run dev
 
 ## API
 
+#### <u> Autenticarse en la API:</u>
+
+- `GET /api/authenticate`
+
+Para autenticarnos tendremos que indicar los siguiente campos en el body, con los datos de uno de los usuarios mencionados anteriormente:
+
+1. `email`
+2. `password`
+
+```json
+{
+  "token": "eyJhbR5pXVCJ9.eyJ1cEwMDMyM30.atQ6E5AizFGMI"
+}
+```
+
+> [!IMPORTANT]
+> El token recibido tendrá que ser enviado en cada petición realizada a la API de una de las siguientes tres maneras:
+>
+> 1. En la cabecera **Authorization**
+> 2. En el body de la solicitud con la clave **jwt**
+> 3. Como parámetro en la query string **jwt=token**
+
+El `token` solo tiene una hora de validez desde el momento de su emisión.
+
 #### <u> Para consultar la lista completa:</u>
 
-* `GET /api/anuncios`
+- `GET /api/anuncios`
 
 ```json
 {
   "resultados": [
     {
-      "_id": "65db0c0e30f2a9b2148b947e",
-      "nombre": "ratón Logitech",
-      "venta": true,
-      "precio": 55,
-      "foto": "raton.jpg",
-      "tags": [
-      "work"
-      ]
+      "_id": "6658c749acba22565cfacd3b",
+      "nombre": "Mueble de madera",
+      "venta": false,
+      "precio": 949,
+      "foto": "1717097445131-mueble_madera.jpg",
+      "thumbFoto": "thumbnail-1717097445131-mueble_madera.jpg",
+      "tags": ["lifestyle", "work"],
+      "owner": "6658c749acba22565cfacd35",
+      "__v": 0
     }
   ]
 }
@@ -73,227 +113,191 @@ npm run dev
 
 #### <u>Consultar con posibilidad de paginación y ordenación:</u>
 
-* ` GET /api/anuncios?skip=2&limit=6&sort=precio`
+- ` GET /api/anuncios?skip=2&limit=6&sort=precio`
 
 Términos de paginación y ordenación:
+
 - **skip**: Es la cantidad de anuncios que se ignoran al principio. Tiene que ser numérico.
-- **limit**: Es la cantidad de anuncios que se mostrarán como máximo. Tiene que ser numérico. 
-- **sort**: Es el campo por el que se ordenarán los resultados. Los campos son: *_id, nombre, venta, precio, foto y tags.*
+- **limit**: Es la cantidad de anuncios que se mostrarán como máximo. Tiene que ser numérico.
+- **sort**: Es el campo por el que se ordenarán los resultados. Los campos son: _\_id, nombre, venta, precio, foto y tags._
 
+#### <u>Consultar por campos:</u>
 
+- `GET /api/anuncios?venta=true`
 
-#### <u>Consultar por campos:</u> 
-
-* `GET /api/anuncios?venta=true`
-
-Indicamos el campo con el valor que queramos buscar: *_id, nombre, venta, precio y tags.*
+Indicamos el campo con el valor que queramos buscar: _\_id, nombre, venta, precio y tags._
 
 #### <u>Consultar por rangos de precio:</u>
 
-* `GET /api/anuncios?precio_min=110&precio_max=600`
+- `GET /api/anuncios?precio_min=110&precio_max=600`
 
-Si se especifica en la query el campo *precio* junto con *precio_min* y/o *precio_max*, se dará prioridad a la búsqueda por rango de precio. Los valores tendrán que ser de tipo numérico.
+Si se especifica en la query el campo _precio_ junto con _precio_min_ y/o _precio_max_, se dará prioridad a la búsqueda por rango de precio. Los valores tendrán que ser de tipo numérico.
 
 #### <u>Consultar por nombre:</u>
 
-* `GET /api/anuncios?nombre=logi`
+- `GET /api/anuncios?nombre=logi`
 
 No hace falta especificar el nombre entero, solo escribir una parte que contenga el título del producto ya es suficiente.
 
 #### <u>Consultar solo los campos seleccionados:</u>
 
-* `GET /api/anuncios?fields=nombre%20-_id`
+- `GET /api/anuncios?fields=nombre%20-_id`
 
-Con este ejemplo recibimos solo los nombres de los productos sin el _id.
+Con este ejemplo recibimos solo los nombres de los productos sin el \_id.
 
 ```json
 {
   "resultados": [
     {
-    "nombre": "Móvil OPPO A78"
+      "nombre": "Móvil OPPO A78"
     },
     {
-    "nombre": "Móvil Iphone 13"
-    },
+      "nombre": "Móvil Iphone 13"
+    }
   ]
 }
 ```
 
 #### <u> Consultar los tags disponibles:</u>
 
-* `GET /api/anuncios/listatags`
+- `GET /api/anuncios/listatags`
 
 Devuelve un array con los tags disponibles de los anuncios.
 
 ```json
 {
-  "resultado": [
-      "work",
-      "lifestyle",
-      "motor",
-      "mobile"
-  ]
+  "resultado": ["work", "lifestyle", "motor", "mobile"]
 }
 ```
 
 #### <u>Crear un anuncio:</u>
 
-* `POST /api/anuncios (body)`
+- `POST /api/anuncios (body)`
 
-Para crear un anuncio tendremos que pasar los campos requeridos:
+El body de la solicitud debe enviarse como `form-data`, y la foto debe incluirse como un campo de tipo `file`.
+
+Para crear un anuncio tendremos que enviar los campos requeridos:
+
 1. `nombre:` tipo string.
 2. `venta:` tipo booleano, **true** para indicar que se vende, **false** para indicar que se compra.
 3. `precio:` tipo number.
 4. `foto:`tipo string.
 5. `tags:` tipo [string].
 
-
-
 Body:
 
-![Cración anuncio](./nodepop/public/images/readme/crearAnuncio.png)
+![Cración anuncio](./nodepop/public/assets/img/readme/crearAnuncio.png)
 
 Respuesta:
 
 ```json
 {
   "anuncioCreado": {
-      "nombre": "coche",
-      "venta": false,
-      "precio": 234,
-      "foto": "coche.jpg",
-      "tags": [
-          "motor",
-          "mobile"
-      ],
-      "_id": "65e0dfd9168c05b1ea4bf000",
-      "__v": 0
-  }
-}
-```
-
-#### <u>Modificar un anuncio:</u>
-
-* `PUT /api/anuncios/<_id>  (body)`
-
-Para modificar el anuncio tendremos que indicar en la URL el _id del anuncio a modificar, y en el body los campos con los valores a actualizar.
-
-Body:
-
-![Modificación anuncio](./nodepop/public/images/readme/modificarAnuncio.png)
-
-Respuesta:
-
-```json
-{
-  "anuncioModificado": {
-      "_id": "65e0d8af808fa9fe424c0a36",
-      "nombre": "casa",
-      "venta": true,
-      "precio": 220,
-      "foto": "teclado.jpg",
-      "tags": [
-          "lifestyle"
-      ],
-      "__v": 0
+    "nombre": "Depósito Aceite",
+    "venta": true,
+    "precio": 235,
+    "foto": "1717098611287-oil-tank.png",
+    "tags": ["work", "motor"],
+    "owner": "6658c749acba22565cfacd34",
+    "_id": "6658d873cf030e4ee84ccfb2",
+    "__v": 0
   }
 }
 ```
 
 #### <u>Eliminar un anuncio:</u>
 
-* `DELETE /api/anuncios/<_id>`
+- `DELETE /api/anuncios/<_id>`
 
-Para eliminar un anuncio tendremos que indicar en la URL el _id del anuncio a eliminar.
+Para eliminar un anuncio tendremos que indicar en la URL el \_id del anuncio a eliminar.
 
-![Eliminación anuncio](./nodepop/public/images/readme/eliminarAnuncio.png)
+![Eliminación anuncio](./nodepop/public/assets/img/readme/eliminarAnuncio.png)
 
 ```json
 {
   "productoEliminado": {
-      "_id": "65e0d8af808fa9fe424c0a36",
-      "nombre": "casa",
-      "venta": true,
-      "precio": 220,
-      "foto": "teclado.jpg",
-      "tags": [
-          "lifestyle"
-      ],
-      "__v": 0
+    "_id": "6658d873cf030e4ee84ccfb2",
+    "nombre": "sdfsdffsdfsdfs",
+    "venta": true,
+    "precio": 1000,
+    "foto": "1717098611287-oil-tank.png",
+    "tags": ["motor"],
+    "owner": "6658c749acba22565cfacd34",
+    "__v": 0,
+    "thumbFoto": "thumbnail-1717098611287-oil-tank.png"
   }
 }
 ```
 
-## WEB
+## WEBSITE
+
+#### <u>Registrarse:</u>
+
+Para poder tener acceso a los anuncios, tendremos que registrarnos con los datos de los usuarios creados inicialmente:
+
+- **email**: user@example.com **password**: 1234
+- **email**: administrador@example.com **password**: 1234
+
+![Login](./nodepop/public/assets/img/readme/login.png)
 
 #### <u>Diseño de la web:</u>
 
-Los productos se muestran uno encima de otro en el centro de la pantalla con el siguiente orden de información:
+La página se divide en tres partes:
 
-1. Nombre del producto.
-2. Si se busca o se vende.
-3. La categoría (tag).
-4. El precio.
-5. La foto del producto.
+1. `Header`:
+   - Nombre de la página **Nodepop**, que servirá de enlace para volver a la página principal donde se mostrarán los anuncios de todos los productos disponibles.
+   - Las banderas de los idiomas en los que está disponible la página web, que servirán para cambiar el idioma cuando deseemos.
+   - El enlace a a la página donde solo se mostrarán los anuncios de los cuales el usuario registrado es el propietario.
+   - El botón para cerrar la sesión de usuario.
+2. `Body`:
 
-![Diseño web](./nodepop/public/images/readme/disenyo_web.png)
+   - Parte donde se mostrará lo específico de cada página, tanto los **anuncios** como el formulario para el **Login**.
+
+   - Los productos se muestran uno al lado de otro en el centro de la pantalla con el siguiente orden de información:
+
+     1. La foto del producto.
+     2. Nombre del producto.
+     3. Si se busca o se vende.
+     4. La categoría (tag).
+     5. El precio.
+
+3. `Footer`:
+   - En él encontraremos un enlace a mi perfil de `LinkedIn`, os invito a visitarlo y a contactarme si estaríais interesados en colaborar o discutir posibles oportunidades profesionales.
+
+![Diseño web](./nodepop/public/assets/img/readme/disenyo_web.png)
 
 #### <u>Para consultar la lista completa de productos:</u>
 
-* `GET /`
+- `GET /`
 
 #### <u>Consultar con posibilidad de paginación y ordenación:</u>
 
-* `GET /?skip=2&limit=6&sort=precio`
+- `GET /?skip=2&limit=6&sort=precio`
 
 Términos de paginación y ordenación:
+
 - **skip**: Es la cantidad de anuncios que se ignoran al principio. Tiene que ser numérico.
-- **limit**: Es la cantidad de anuncios que se mostrarán como máximo. Tiene que ser numérico. 
-- **sort**: Es el campo por el que se ordenarán los resultados. Los campos son: *_id, nombre, venta, precio, foto y tags.*
+- **limit**: Es la cantidad de anuncios que se mostrarán como máximo. Tiene que ser numérico.
+- **sort**: Es el campo por el que se ordenarán los resultados. Los campos son: _\_id, nombre, venta, precio, foto y tags._
 
-#### <u>Consultar por campos:</u> 
+#### <u>Consultar por campos:</u>
 
-* `GET /?venta=true`
+- `GET /?venta=true`
 
-Indicamos el campo con el valor que queramos buscar: *_id, nombre, venta, precio y tags.*
+Indicamos el campo con el valor que queramos buscar: _\_id, nombre, venta, precio y tags._
 
 #### <u>Consultar por rangos de precio:</u>
 
-* `GET /?precio_min=110&precio_max=600`
+- `GET /?precio_min=110&precio_max=600`
 
-Si se especifica en la query el campo *precio* junto con *precio_min* y/o *precio_max*, se dará prioridad a la búsqueda por rango de precio. Los valores tendrán que ser de tipo numérico.
+Si se especifica en la query el campo _precio_ junto con _precio_min_ y/o _precio_max_, se dará prioridad a la búsqueda por rango de precio. Los valores tendrán que ser de tipo numérico.
 
 #### <u>Consultar por nombre:</u>
 
-* `GET /?nombre=logi`
+- `GET /?nombre=logi`
 
 No hace falta especificar el nombre entero, solo escribir una parte que contenga el título del producto ya es suficiente.
 
 #### <u>Consultar solo los campos seleccionados:</u>
 
 Esta opción no está disponible en la web, solo en la API.
-
-#### <u>Creación anuncio por formulario:</u>
-
-Podremos crear un anuncio desde la página web utilizando el formulario. Todos los campos son obligatorios, y se requiere seleccionar al menos una **categoría**. 
-En esta versión el campo `foto` tiene que ser de tipo string. Estamos trabajando para que en futuras versiones sea disponible subir la imagen. 
-
-![Formulario creación](./nodepop/public/images/readme/formulario_creacion.png)
-
-## Registro de cambios
-
-### v1.0.1
-* Mensaje inicial de la página web actualizado.
-* Los anuncios iniciales se han transladado de `init-db.js` a `anuncios.json` para mejorar la legibilidad del código y facilitar su mantenimiento.
-
-### v1.1
-* Se ha implementado un formulario en la página web que permite la creación de nuevos anuncios. 
-
-### v1.1.1
-* Se ha creado la ruta `/api/anuncios/listatags` que proporciona un array con los tags disponibles.
-* Se ha mejorado la búsqueda por tags.
-* Validadores convertidos en objetos para una mejor legibilidad del código.
-
-### v1.1.2
-
-* Se ha estilizado la página web.

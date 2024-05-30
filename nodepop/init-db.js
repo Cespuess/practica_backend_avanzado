@@ -39,9 +39,9 @@ async function inicializaAnuncios() {
   const eliminados = await Anuncio.deleteMany();
   console.log(`Eliminados ${eliminados.deletedCount} anuncios`);
 
-  const [administrador, cliente] = await Promise.all([
+  const [administrador, user] = await Promise.all([
     Usuario.findOne({ email: 'administrador@example.com' }),
-    Usuario.findOne({ email: 'cliente@example.com' })
+    Usuario.findOne({ email: 'user@example.com' })
   ]);
   const insertados = await Anuncio.insertMany([
     {
@@ -60,7 +60,7 @@ async function inicializaAnuncios() {
       foto: 'iphone_13.jpg',
       thumbFoto: '',
       tags: ['mobile', 'work'],
-      owner: cliente._id
+      owner: user._id
     },
     {
       nombre: 'Bambas Munich Mini Track',
@@ -78,7 +78,7 @@ async function inicializaAnuncios() {
       foto: 'acer_nitro.jpg',
       thumbFoto: '',
       tags: ['work'],
-      owner: cliente._id
+      owner: user._id
     },
     {
       nombre: 'Logitech Marathon Mouse',
@@ -96,7 +96,7 @@ async function inicializaAnuncios() {
       foto: 'fiat_500.jpg',
       thumbFoto: '',
       tags: ['motor'],
-      owner: cliente._id
+      owner: user._id
     },
     {
       nombre: 'Pantalones tejanos talla: 44',
@@ -114,7 +114,7 @@ async function inicializaAnuncios() {
       foto: 'honda_civic.jpg',
       thumbFoto: '',
       tags: ['motor'],
-      owner: cliente._id
+      owner: user._id
     },
     {
       nombre: 'Móvil Samsung A14',
@@ -132,7 +132,7 @@ async function inicializaAnuncios() {
       foto: 'camiseta_blanca.jpg',
       thumbFoto: '',
       tags: ['lifestyle'],
-      owner: cliente._id
+      owner: user._id
     },
     {
       nombre: 'Teclado mecánico EASYTAO',
@@ -159,7 +159,7 @@ async function inicializaUsuarios() {
       password: await Usuario.hashPassword('1234')
     },
     {
-      email: 'cliente@example.com',
+      email: 'user@example.com',
       password: await Usuario.hashPassword('1234')
     }
   ]);

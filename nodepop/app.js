@@ -56,7 +56,7 @@ app.use((req, res, next) => {
 app.use(I18n.init);
 
 // Rutas del API
-app.post('/api/login', loginController.postApiToken);
+app.post('/api/authenticate', loginController.postApiToken);
 app.use('/api/anuncios', authJWT, require('./routes/api/anuncios'));
 
 // Rutas del website

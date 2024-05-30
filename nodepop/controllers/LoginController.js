@@ -16,7 +16,7 @@ class LoginController {
       // si no lo encuentra o la contraseña no coincide
       if (!usuario || !(await usuario.comparePassword(password))) {
         res.locals.email = email;
-        res.locals.error = 'Usuario / Contraseña no válidos';
+        res.locals.error = res.__('Usuario / Contraseña no válidos');
         return res.render('login', { title: 'Nodepop' });
       }
 

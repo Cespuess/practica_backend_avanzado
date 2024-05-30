@@ -6,7 +6,7 @@ const upload = require('../../lib/uploadConfigure');
 const Anuncio = require('../../models/Anuncio');
 const { listado } = require('../../lib/utils');
 const { validationResult } = require('express-validator');
-const { valBody, valQuery } = require('../../lib/validaciones');
+const { valQuery } = require('../../lib/validaciones');
 const createThumbnail = require('../../lib/requesterThumbnail');
 
 // GET users listing
@@ -87,29 +87,6 @@ router.post('/', upload.single('foto'), async (req, res, next) => {
     next(error);
   }
 });
-
-// PUT /api/anuncios/<_id>  (body)
-// Modificar un anuncio
-
-router.put(
-  '/:id',
-  [valBody.tags, valBody.nombre, valBody.venta, valBody.precio, valBody.foto],
-  async (req, res, next) => {
-    try {
-      validationResult(req).throw();
-      const id = req.params.id;
-      const data = req.body;
-
-      const anuncioActualizado = await Anuncio.findByIdAndUpdate(id, data, {
-        new: true
-      });
-
-      res.json({ anuncioModificado: anuncioActualizado });
-    } catch (error) {
-      next(error);
-    }
-  }
-);
 
 // DELETE /api/anuncios/<_id>
 // Eliminar un anuncio
