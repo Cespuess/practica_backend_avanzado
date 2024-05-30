@@ -1,11 +1,9 @@
-const { validationResult } = require('express-validator');
 const { Anuncio } = require('../models');
 const { listado } = require('../lib/utils');
 
 class AdsController {
   async index(req, res, next) {
     try {
-      validationResult(req).throw(); // lanza el error si alguna validación no ha pasado
       const anuncios = await listado(req, Anuncio);
       res.render('index', {
         title: 'Nodepop',

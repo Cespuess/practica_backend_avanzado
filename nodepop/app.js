@@ -9,7 +9,8 @@ require('./lib/connectMongoose');
 const {
   AdsController,
   LoginController,
-  LanguageController
+  LanguageController,
+  MyAdsController
 } = require('./controllers');
 const validations = require('./lib/validationsFunctions');
 const sessionAuth = require('./lib/sessionAuthMiddleware');
@@ -21,6 +22,7 @@ var app = express();
 const adsController = new AdsController();
 const loginController = new LoginController();
 const languageController = new LanguageController();
+const myAdsController = new MyAdsController();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -63,8 +65,7 @@ app.get('/login', loginController.index);
 app.post('/login', loginController.post);
 app.get('/logout', loginController.logout);
 app.get('/change-language/:language', languageController.changeLocale);
-
-app.use('/users', require('./routes/users'));
+app.get('/myAds', sessionAuth, myAdsController.index);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
