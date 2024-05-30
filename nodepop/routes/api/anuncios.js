@@ -67,10 +67,23 @@ router.post('/', upload.single('foto'), async (req, res, next) => {
 
     // lo guardamos en la BD
     const anuncioGuardado = await anuncio.save();
+
     createThumbnail(data.foto, anuncioGuardado.id);
 
     res.json({ anuncioCreado: anuncioGuardado });
   } catch (error) {
+    // si finalmente el anuncio no se crea correctamente, eliminamos la imagen subida
+    const pathFile = path.join(
+      __dirname,
+      '..',
+      '..',
+      'public',
+      'assets',
+      'img',
+      'ads',
+      req.file.filename
+    );
+    fs.unlinkSync(pathFile);
     next(error);
   }
 });
