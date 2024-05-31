@@ -60,6 +60,10 @@ router.post('/', upload.single('foto'), async (req, res, next) => {
 
     const data = req.body;
     data.owner = req.apiUserId;
+    if (!req.file)
+      return res.json({
+        error: 'Hay que incluir una foto para la creación del anuncio.'
+      });
     data.foto = req.file.filename;
 
     // creamos una instancia del anuncio
