@@ -57,14 +57,9 @@ const valQuery = {
 const valBody = {
   // Validamos tags que esten en la lista en peticiones
   tags: body('tags')
-    .custom((value) => {
-      const arrayTags = ['work', 'lifestyle', 'motor', 'mobile'];
-      if (Array.isArray(value)) {
-        if (!value.every((tag) => arrayTags.includes(tag))) return true;
-      } else {
-        if (arrayTags.includes(value)) return true;
-      }
-    })
+    .notEmpty()
+    .withMessage('Tienes que poner al menos un tag al anuncio')
+    .isIn(['lifestyle', 'mobile', 'motor', 'work'])
     .withMessage(
       'El tag tiene que ser uno de los siguientes: work, lifestyle, motor, mobile.'
     ),
@@ -82,13 +77,7 @@ const valBody = {
   // Validar precio
   precio: body('precio')
     .isNumeric()
-    .withMessage('El precio tiene que ser un número.'),
-
-  // Validar foto
-  foto: body('foto')
-    .optional()
-    .notEmpty()
-    .withMessage('Tienes que poner una foto del producto.')
+    .withMessage('El precio tiene que ser un número.')
 };
 
 module.exports = { valBody, valQuery };

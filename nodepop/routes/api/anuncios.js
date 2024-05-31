@@ -8,6 +8,7 @@ const { listado } = require('../../lib/utils');
 const { validationResult } = require('express-validator');
 const { valQuery } = require('../../lib/validaciones');
 const createThumbnail = require('../../lib/requesterThumbnail');
+const { CreateAd } = require('../../lib/validationsFunctions');
 
 // GET users listing
 
@@ -42,28 +43,14 @@ router.get('/listatags', function (req, res, next) {
 // POST /api/anuncios
 
 // crear un anuncio
-router.post('/', upload.single('foto'), async (req, res, next) => {
+router.post('/', upload.single('foto'), CreateAd, async (req, res, next) => {
   try {
-    const tagsErrorMsg =
-      'Hay que poner almenos un tag de la lista: work, lifestyle, motor, mobile.';
-    if (!('tags' in req.body)) {
-      throw new Error(tagsErrorMsg);
-    } else {
-      const arrayTags = ['work', 'lifestyle', 'motor', 'mobile'];
-      if (Array.isArray(req.body.tags)) {
-        if (!req.body.tags.every((tag) => arrayTags.includes(tag)))
-          throw new Error(tagsErrorMsg);
-      } else {
-        if (!arrayTags.includes(req.body.tags)) throw new Error(tagsErrorMsg);
-      }
-    }
+    validationResult(req).throw();
+    if (!req.file)
+      throw new Error('Hay que incluir una foto para la creación del anuncio');
 
     const data = req.body;
     data.owner = req.apiUserId;
-    if (!req.file)
-      return res.json({
-        error: 'Hay que incluir una foto para la creación del anuncio.'
-      });
     data.foto = req.file.filename;
 
     // creamos una instancia del anuncio
@@ -77,17 +64,19 @@ router.post('/', upload.single('foto'), async (req, res, next) => {
     res.json({ anuncioCreado: anuncioGuardado });
   } catch (error) {
     // si finalmente el anuncio no se crea correctamente, eliminamos la imagen subida
-    const pathFile = path.join(
-      __dirname,
-      '..',
-      '..',
-      'public',
-      'assets',
-      'img',
-      'ads',
-      req.file.filename
-    );
-    fs.unlinkSync(pathFile);
+    if (req.file) {
+      const pathFile = path.join(
+        __dirname,
+        '..',
+        '..',
+        'public',
+        'assets',
+        'img',
+        'ads',
+        req.file.filename
+      );
+      fs.unlinkSync(pathFile);
+    }
     next(error);
   }
 });

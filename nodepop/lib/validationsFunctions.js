@@ -10,7 +10,7 @@ const validations = {
     valQuery.nombre,
     valQuery.noFieldsWeb
   ],
-  CreateAd: [valBody.nombre, valBody.venta, valBody.precio]
+  CreateAd: [valBody.nombre, valBody.venta, valBody.precio, valBody.tags]
 };
 
 module.exports = validations;
