@@ -2,7 +2,7 @@
 
 ## ¿ En que consiste ?
 
-Basándonos la [práctica del módulo de Fundamentos Backend](https://github.com/Cespuess/practica_fundamentos_backend_node.js), en la que creamos una página de compra/venta de artículos de segunda mano y su API,
+Basándonos en la [práctica del módulo de Fundamentos Backend](https://github.com/Cespuess/practica_fundamentos_backend_node.js), en la que creamos una página de compra/venta de artículos de segunda mano y su API,
 hemos mejorado el proyecto implementado autenticación con JWT para la API, y con Session en el website. Además, hemos convertido el website en una aplicación multi-idioma e incorporado un microservicio que genera un thumbnail de la imagen subida al crear un anuncio.
 
 Os proporciono el fichero con la explicación de la [práctica](./Backend_Avanzado_Práctica_Web16.pdf) para una comprensión más completa.
@@ -48,7 +48,7 @@ npm install
 npm run init-db
 ```
 
-Este comando nos creará anuncios y usuarios para poder empezar a utilizar la aplicación.
+Respondiendo `"si"` nos creará anuncios y usuarios para poder empezar a utilizar la aplicación.
 
 Los usuarios creados son los siguiente:
 
@@ -119,7 +119,7 @@ Términos de paginación y ordenación:
 
 - **skip**: Es la cantidad de anuncios que se ignoran al principio. Tiene que ser numérico.
 - **limit**: Es la cantidad de anuncios que se mostrarán como máximo. Tiene que ser numérico.
-- **sort**: Es el campo por el que se ordenarán los resultados. Los campos son: _\_id, nombre, venta, precio, foto y tags._
+- **sort**: Es el campo por el que se ordenarán los resultados. Los campos son: _\_id, nombre, venta, precio, foto, tags, owner y thumbFoto._
 
 #### <u>Consultar por campos:</u>
 
@@ -278,7 +278,7 @@ Términos de paginación y ordenación:
 
 - **skip**: Es la cantidad de anuncios que se ignoran al principio. Tiene que ser numérico.
 - **limit**: Es la cantidad de anuncios que se mostrarán como máximo. Tiene que ser numérico.
-- **sort**: Es el campo por el que se ordenarán los resultados. Los campos son: _\_id, nombre, venta, precio, foto y tags._
+- **sort**: Es el campo por el que se ordenarán los resultados. Los campos son: _\_id, nombre, venta, precio, foto, tags, owner y thumbFoto._
 
 #### <u>Consultar por campos:</u>
 
