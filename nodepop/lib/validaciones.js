@@ -38,18 +38,10 @@ const valQuery = {
 
   // Validar tags que esten en la lista
   tags: query('tags')
-    .custom((value) => {
-      const tags = ['work', 'lifestyle', 'motor', 'mobile'];
-      if (Array.isArray(value)) {
-        // si lo que recibimos es un array comprobamos si cada elemento está en la lista de tags
-        if (value.every((tag) => tags.includes(tag))) return true;
-      } else {
-        if (tags.includes(value)) return true;
-      }
-    })
     .optional()
+    .isIn(['lifestyle', 'mobile', 'motor', 'work'])
     .withMessage(
-      'El tag tiene que estar en la lista siguiente: work, lifestyle, motor, mobile.'
+      'El tag tiene que ser uno de los siguientes: work, lifestyle, motor, mobile.'
     )
 };
 

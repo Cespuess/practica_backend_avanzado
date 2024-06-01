@@ -1,9 +1,11 @@
 const { Anuncio } = require('../models');
 const { listado } = require('../lib/utils');
+const { validationResult } = require('express-validator');
 
 class AdsController {
   async index(req, res, next) {
     try {
+      validationResult(req).throw();
       const anuncios = await listado(req, Anuncio);
       res.render('index', {
         title: 'Nodepop',
@@ -17,22 +19,6 @@ class AdsController {
         error.status = 422;
       }
 
-      res.render('index', { title: 'Nodepop', error: error });
-    }
-  }
-
-  async post(req, res, next) {
-    try {
-      const data = req.body;
-
-      // creamos una instancia del anuncio
-      const anuncio = new Anuncio(data);
-
-      // lo guardamos en la BD
-      await anuncio.save();
-
-      res.redirect('/');
-    } catch (error) {
       res.render('index', { title: 'Nodepop', error: error });
     }
   }
